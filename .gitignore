@@ -1,0 +1,43 @@
+# Build output
+bin/
+build/
+dist/
+
+# Object files
+*.o
+*.obj
+
+# Static / shared libraries
+*.a
+*.so
+*.dylib
+
+# Executables
+*.out
+*.exe
+
+# Dependency files
+*.d
+
+# Logs
+*.log
+
+# Editor / IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage / profiling
+*.gcda
+*.gcno
+*.gcov
+
+# Valgrind
+vgcore.*
+
