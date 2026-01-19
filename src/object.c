@@ -60,4 +60,49 @@ object_t *new_string(char *string){
 }
 
 
+object_t *new_array(size_t size){
+	object_t *obj = (object_t*)malloc(sizeof(object_t)) ; 
+	if(!obj) return NULL ; 
+	
+	obj->type = ARRAY ; 
+	
+	object_t **collection = (object_t**)calloc(size , sizeof(object_t*)) ; 
+
+	if(!collection){
+		free(obj) ; 
+		return NULL ; 
+	}
+
+	obj->data.v_array.collection = collection ; 
+	obj->data.v_array.size = size ; 
+
+	return obj ; 
+}
+
+
+int set_array_value(object_t *arr , object_t *value , unsigned int index){
+	if(!arr || !value) return 1 ; 
+
+	if(arr->type != ARRAY) return 1 ; 
+
+	if(index >= arr->data.v_array.size) return 1 ; 
+
+	arr->data.v_array.collection[index] = value ;
+
+	return 0 ; 
+}
+
+
+object_t *get_array_value(object_t *arr , unsigned int index){
+	if(!arr) return NULL ; 
+
+	if(index >= arr->data.v_array.size) return NULL ; 
+	
+	object_t *obj = arr->data.v_array.collection[index] ; 
+
+	return obj ; 
+
+}
+
+
 
