@@ -1,5 +1,4 @@
 #include<stdlib.h>
-#include<stdio.h>
 #include "../include/object.h"
 #include<string.h>
 
@@ -103,6 +102,81 @@ object_t *get_array_value(object_t *arr , unsigned int index){
 	return obj ; 
 
 }
+
+
+int len(object_t *obj){
+	if(!obj) return -1 ; 
+
+	switch(obj->type){
+		case INTEGER : 
+			return 1 ; 
+		case FLOAT : 
+			return 1 ; 
+		case STRING : 
+			return strlen(obj->data.v_string);
+		case ARRAY : 
+			return obj->data.v_array.size ; 
+		default : 
+			return -1 ; 
+	}
+}
+
+
+object_t *add(object_t *a , object_t *b){
+	if(!a || !b) return NULL ;
+
+	switch(a->type){
+		case INTEGER : 
+			switch(b->type){
+				case INTEGER : 
+					int sum = a->data.v_int + b->data.v_int ; 
+					return new_integer(sum) ; 
+				case FLOAT : 
+					float fsum = a->data.v_int + b->data.v_float ;
+					return new_float(fsum) ; 
+				default : 
+					return NULL ; 
+			}
+		case FLOAT : 
+			switch(b->type){
+				case FLOAT : 
+					float sum = a->data.v_float + b->data.v_float;
+					return new_float(sum);
+				case INTEGER : 
+					add(b , a) ; 
+				default : 
+					return NULL ; 
+			}
+		case STRING : 
+			switch(b->type){
+				case STRING : 
+					size_t total_size = len(a) + len(b) + 1 ;
+					char *buf = (char*)malloc(sizeof(char) * total_size) ; 
+					if(!buf) return NULL ; 
+					strcat(buf , a->data.v_string) ; 
+					strcat(buf , b->data.v_string) ; 
+
+					object_t *newstring = new_string(buf) ;
+					free(buf); 
+					return newstring ;
+				default : 
+					return NULL ; 
+			}
+		case ARRAY : 
+			switch(b->type){
+				case ARRAY :
+					return NULL ;
+				default : 
+					return NULL ; 
+			}
+	}
+}
+
+
+
+
+
+
 
 
 

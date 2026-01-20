@@ -39,3 +39,6 @@ object_t *new_array(size_t size) ;
 
 int set_array_value(object_t *arr , object_t *value , unsigned int index) ;
 object_t *get_array_value(object_t *arr , unsigned int index) ; 
+int len(object_t *obj);
+object_t *add(object_t *a , object_t *b) ; 
+
