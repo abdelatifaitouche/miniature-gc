@@ -1,6 +1,7 @@
 #include<stdlib.h>
 #include "../include/object.h"
 #include<string.h>
+#include<stdio.h>
 
 
 
@@ -165,7 +166,18 @@ object_t *add(object_t *a , object_t *b){
 		case ARRAY : 
 			switch(b->type){
 				case ARRAY :
-					return NULL ;
+					//just join the array 
+					size_t total_size = len(a) + len(b) ;
+					object_t *arr = new_array(total_size) ; 
+					if(!arr) return NULL ;
+					for(int i=0 ; i<len(a) ; i++){
+						set_array_value(arr , get_array_value(a , i) , i) ;
+					}
+					for(int i=0 ; i<len(b) ; i++){
+						set_array_value(arr , get_array_value(b , i) , i + len(a)) ; 
+					}
+
+					return arr ;
 				default : 
 					return NULL ; 
 			}
